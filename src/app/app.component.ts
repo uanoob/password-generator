@@ -6,5 +6,47 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'password-generator';
+  password = '';
+  length = 0;
+  includeLetters = false;
+  includeNumbers = false;
+  includeSymbols = false;
+
+  onButtonClick() {
+    const numbers = '1234567890';
+    const letters = 'abcdefghijklmnopqrstuvwyz';
+    const symbols = '!@#$%^&*()';
+    let validChars = '';
+    if (this.includeLetters) {
+      validChars += letters;
+    }
+    if (this.includeNumbers) {
+      validChars += numbers;
+    }
+    if (this.includeSymbols) {
+      validChars += symbols;
+    }
+    let generatedPassword = '';
+    for (let i = 0; i < this.length; i++) {
+      const index = Math.floor(Math.random() * validChars.length);
+      generatedPassword += validChars[index];
+    }
+    this.password = generatedPassword;
+  }
+  onChangeLength(value: string) {
+    const parsedLength = parseInt(value);
+    if (isNaN(parsedLength)) {
+      return;
+    }
+    this.length = parsedLength;
+  }
+  onChangeUseLetters() {
+    this.includeLetters = !this.includeLetters;
+  }
+  onChangeUseNumbers() {
+    this.includeNumbers = !this.includeNumbers;
+  }
+  onChangeUseSymbols() {
+    this.includeSymbols = !this.includeSymbols;
+  }
 }
